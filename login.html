@@ -1,0 +1,82 @@
+<html>
+    <head>
+          <title> Login </title>
+          <!-- link to css style sheet -->
+          <link rel="stylesheet" type="text/css" href="stylecss.css">
+</head>
+
+<body>
+      <!-- navigation -->
+      <div class="navigation">
+        <ul>
+
+            <li><a href="rankings.html">Rankings</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="index.html">Homepage</a></li>
+
+          </ul>
+        </div>
+
+<h1>Login</h1>
+
+
+<form id="myForm" onsubmit="return validateForm()" method="post">
+<div>
+<input type="text" name="username" placeholder="Email Address" id="loginName">
+        <input type="password" name="password" placeholder="Password" id="loginPassword">
+        <input type="submit" onclick="checkLogin()">
+        <p id="LoginResult">Not logged in.</p>
+</div>
+
+  <script>
+
+        function checkLogin(){
+                    //Get a reference to the div where we will display the login result
+                    var loginResult = document.getElementById("LoginResult");
+
+                    //Extract the name and password that the user has entered
+                    var nameInput = document.getElementById("loginName").value;
+                    var pwdInput = document.getElementById("loginPassword").value;
+
+                    //Output for debugging
+                    console.log("Login name: " + nameInput+ "; Login password" + pwdInput);
+
+                    //Check to see if we have data stored for this user
+                    if(localStorage[nameInput] === undefined){
+                        //No user found - provide feedback to user.
+                        loginResult.innerHTML = "Incorrect";
+                        return;
+                    }
+
+                    //Check password
+                    //Get object that is stored for the user name.
+                    var usrObj = JSON.parse(localStorage[nameInput]);
+
+                    //Compare the entered password with the stored password
+                    if(pwdInput !== usrObj.password){
+                        //Incorrect password - provide feedback to user
+                        loginResult.innerHTML = "Password incorrect";
+                        return;
+                    }
+
+                    //If we have got this far, the username and password are correct
+
+                    //Record the user that has logged in using local storage.
+                    localStorage.loggedInUser = nameInput;
+
+                    //Provide feedback to user - you could also provide a logout button - see the example in my slides.
+                    loginResult.innerHTML = "Logged in :)";
+                }
+
+
+
+  </script>
+
+  <div class="footer">
+    <p> By Oguzhan Janberk</p>
+  </div>
+
+</body>
+</html>

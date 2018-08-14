@@ -1,0 +1,88 @@
+<html>
+    <head>
+          <title> Register </title>
+          <!-- link to css style sheet -->
+          <link rel="stylesheet" type="text/css" href="stylecss.css">
+</head>
+
+<body>
+      <!-- navigation -->
+      <div class="navigation">
+        <ul>
+
+            <li><a href="rankings.html">Rankings</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="index.html">Homepage</a></li>
+
+          </ul>
+        </div>
+
+<h1>Register</h1>
+
+
+<!-- create form -->
+<div>
+  <form id="userDetails" onsubmit ="return false">
+          <br>
+  				First Name:<br>
+  				<input type="text" placeholder="First Name" id="firstName" required>
+  				<br>
+  				<br>
+  				Last Name:<br>
+  				<input type="text" placeholder="Last Name" id="lastName" required>
+  				<br>
+  				<br>
+  				E-mail: <br>
+  				<input type="email" name="email" autocomplete="off" placeholder="E-mail" id="email" required>
+  				<br>
+  				<br>
+  				<br>
+            Password: <br>
+          <input type="password" name="password" autocomplete="off" placeholder="Password" id="password" required>
+          <br>
+          <br>
+          Gender: <br>
+          <select>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+          <br>
+          <br>
+          Phone number: <br>
+          <input type="text" name="phone" placeholder="Phone Number" id="phonenumberInput" required>
+
+          <input type="submit" onclick="registerUser()">
+
+  				<br>
+  				<br>
+  				<br>
+  				<br>
+
+  				</form>
+
+          <p id="result" style="color: green"></p>
+          <p id="userObject"></p>
+                               </div>
+
+<script>
+
+      function registerUser(){
+      var userObject = {};
+      userObject.firstName = document.getElementById("firstName").value;
+      userObject.lastName = document.getElementById("lastName").value;
+      userObject.email = document.getElementById("email").value;
+      userObject.password = document.getElementById("password").value;
+
+      localStorage[userObject.email] = JSON.stringify(userObject);
+
+      document.getElementById("result").innerHTML = "<b>Registreation Successful.</b>";
+                             }
+    </script>
+
+<div class="footer">
+<p> By Oguzhan Janberk</p>
+    </div>
+</body>
+</html>

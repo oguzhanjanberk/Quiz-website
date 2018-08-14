@@ -1,0 +1,235 @@
+<html>
+    <head>
+          <title> Game </title>
+          <!-- link to css style sheet -->
+          <link rel="stylesheet" type="text/css" href="stylecss.css">
+</head>
+
+<body>
+
+      <!-- navigation -->
+      <div class="navigation">
+        <ul>
+
+            <li><a href="rankings.html">Rankings</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="index.html">Homepage</a></li>
+
+          </ul>
+        </div>
+
+<br>
+
+
+<h1>Math Quiz</h1>
+
+<div class="quiz-container">
+  <div id="quiz"></div>
+</div>
+
+<button id="next">Next Question</button>
+<button id="submit">Submit Quiz</button>
+<div id="results"></div>
+
+<script>
+  (function() {
+//putting the questions in an array
+   myQuestions = [
+  {
+    question: "What is 100 + 100?",
+    answers: {
+      a: "300",
+      b: "500",
+      c: "200"
+    },
+    correctAnswer: "c"
+  },
+  {
+    question: "What is 300 * 0?",
+    answers: {
+      a: "3000",
+      b: "0",
+      c: "30"
+    },
+    correctAnswer: "b"
+  },
+  {
+    question: "What is 200 - 200?",
+    answers: {
+      a: "0.2",
+      b: "150",
+      c: "0"
+    },
+    correctAnswer: "c"
+  },
+
+  {
+    question: "What is 500 / 100?",
+    answers: {
+      a: "0.50",
+      b: "600",
+      c: "5",
+
+    },
+    correctAnswer: "c"
+  },
+
+  {
+    question: "What is (9 + 5) * 10?",
+    answers: {
+      a: "",
+      b: "150",
+      c: "0"
+
+    },
+    correctAnswer: "c"
+  },
+
+  {
+    question: "What is (10 * 10) / 10?",
+    answers: {
+      a: "0.2",
+      b: "10",
+      c: "0"
+
+    },
+    correctAnswer: "c"
+  },
+
+  {
+    question: "What is 2x + 4x?",
+    answers: {
+      a: "2x",
+      b: "x",
+      c: "6x"
+
+    },
+    correctAnswer: "c"
+  },
+
+  {
+    question: "What is (6 + 6) * (6 + 6)?",
+    answers: {
+      a: "144",
+      b: "36",
+      c: "Bill gates"
+
+    },
+    correctAnswer: "a"
+  },
+
+];
+
+  function buildQuiz() {
+    //output from array
+   output = [];
+
+
+  myQuestions.forEach((currentQuestion, questionNumber) => {
+    // store answers in array
+     answers = [];
+
+    // outputs the radio button answers
+    for (letter in currentQuestion.answers) {
+
+      answers.push(
+        //add radio buttons
+        `<label>
+           <input type="radio" name="question${questionNumber}" value="${letter}">
+            ${letter} :
+            ${currentQuestion.answers[letter]}
+         </label>`
+      );
+    }
+
+
+    output.push(
+      `<div class="slide">
+         <div class="question"> ${currentQuestion.question} </div>
+         <div class="answers"> ${answers.join("")} </div>
+       </div>`
+    );
+  });
+
+  // finally combine the output into string of HTML and print to the page
+  quizContainer.innerHTML = output.join("");
+}
+
+function showResults() {
+  // get all the answers from the container
+   answerContainers = quizContainer.querySelectorAll(".answers");
+
+  // track the answers
+  let numCorrect = 0;
+
+  //checks each
+  myQuestions.forEach((currentQuestion, questionNumber) => {
+    // find selected answer
+     answerContainer = answerContainers[questionNumber];
+     selector = `input[name=question${questionNumber}]:checked`;
+     userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+    // answer is correct
+    if (userAnswer === currentQuestion.correctAnswer) {
+      // add to the number of correct answers
+      numCorrect++;
+}
+  });
+
+  // show total number of correct answers out of
+  resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+}
+
+
+
+//goes to the next slide
+function showNextSlide() {
+  showSlide(currentSlide + 1);
+}
+
+function showSlide(n) {
+  slides[currentSlide].classList.remove("active-slide");
+  slides[n].classList.add("active-slide");
+  currentSlide = n;
+
+
+
+  if (currentSlide === slides.length - 1) {
+    nextButton.style.display = "none";
+    submitButton.style.display = "inline-block";
+  } else {
+    nextButton.style.display = "inline-block";
+    submitButton.style.display = "none";
+  }
+}
+
+
+ quizContainer = document.getElementById("quiz");
+ resultsContainer = document.getElementById("results");
+ submitButton = document.getElementById("submit");
+
+// display quiz right away
+buildQuiz();
+
+
+ nextButton = document.getElementById("next");
+ slides = document.querySelectorAll(".slide");
+let currentSlide = 0;
+
+showSlide(0);
+
+// display the results
+submitButton.addEventListener("click", showResults);
+
+nextButton.addEventListener("click", showNextSlide);
+})();
+</script>
+
+<div class="footer">
+  <p> By Oguzhan Janberk</p>
+</div>
+
+</body>
+</html>
